@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Угадай число</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+            color: var(--tg-theme-text-color, #000);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--tg-theme-hint-color, #999);
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .game-info {
+            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .score {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .attempts {
+            font-size: 14px;
+            color: var(--tg-theme-hint-color, #666);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 16px;
+            font-size: 24px;
+            text-align: center;
+            border: 2px solid var(--tg-theme-button-color, #0088cc);
+            border-radius: 12px;
+            background: var(--tg-theme-bg-color, #fff);
+            color: var(--tg-theme-text-color, #000);
+            outline: none;
+        }
+
+        .button {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .button:active {
+            transform: scale(0.98);
+        }
+
+        .button-primary {
+            background: var(--tg-theme-button-color, #0088cc);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            margin-bottom: 10px;
+        }
+
+        .button-secondary {
+            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            color: var(--tg-theme-text-color, #000);
+        }
+
+        .message {
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 500;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .message.hint {
+            background: rgba(255, 193, 7, 0.1);
+            color: #f39c12;
+        }
+
+        .message.success {
+            background: rgba(76, 175, 80, 0.1);
+            color: #27ae60;
+        }
+
+        .message.error {
+            background: rgba(244, 67, 54, 0.1);
+            color: #e74c3c;
+        }
+
+        .history {
+            margin-top: 30px;
+        }
+
+        .history-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--tg-theme-hint-color, #666);
+        }
+
+        .history-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .history-item {
+            padding: 8px 12px;
+            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Угадай число</h1>
+        <p class="subtitle">Я загадал число от 1 до 100</p>
+
+        <div class="game-info">
+            <div class="score">Счёт: <span id="score">0</span></div>
+            <div class="attempts">Попыток: <span id="attempts">0</span></div>
+        </div>
+
+        <div id="message" class="message" style="display: none;"></div>
+
+        <div class="input-group">
+            <input type="number" id="guessInput" min="1" max="100" placeholder="?" autocomplete="off">
+        </div>
+
+        <button class="button button-primary" id="guessButton">Проверить</button>
+        <button class="button button-secondary" id="newGameButton">Новая игра</button>
+
+        <div class="history">
+            <div class="history-title">Твои попытки:</div>
+            <div class="history-items" id="history"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
